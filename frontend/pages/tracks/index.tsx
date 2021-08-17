@@ -1,11 +1,15 @@
 import { Grid, Card, Button, Box } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React from 'react';
+import TrackList from '../../components/TrackList';
+import { useAction } from '../../hooks/useActions';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import MainLayout from '../../layouts/MainLayout';
 import { ITrack } from '../../types/track';
 
 const Track = () => {
     const router = useRouter();
+    const {} = useAction()
     const tracks: ITrack[] = [
         {
             _id: '61164e18deed873db8ba9316',
@@ -13,8 +17,9 @@ const Track = () => {
             artist: 'Юсуф',
             text: 'Знаешь ли ты, вдоль ночных дорог',
             listens: 5,
-            picture: 'http://localhost:5000/image/c5fc6350-3e5a-426d-bb7b-da8c997a511a.jpg',
+            picture: 'http://localhost:5000/image/3f152601-8f35-4621-b234-bbe0a52b8099.jpg',
             audio: 'http://localhost:5000/audio/d6a96d79-b7ad-4f11-b97c-d1bca1935d32.mp3',
+            comments: [],
         },
         {
             _id: '6116822cc7b48812d061541c',
@@ -22,8 +27,9 @@ const Track = () => {
             artist: 'Юсуф',
             text: 'Знаешь ли ты, вдоль ночных дорог',
             listens: 5,
-            picture: 'http://localhost:5000/image/c5fc6350-3e5a-426d-bb7b-da8c997a511a.jpg',
+            picture: 'http://localhost:5000/image/3f152601-8f35-4621-b234-bbe0a52b8099.jpg',
             audio: 'http://localhost:5000/audio/d6a96d79-b7ad-4f11-b97c-d1bca1935d32.mp3',
+            comments: [],
         },
         {
             _id: '6116822cc7b48812d061541d',
@@ -31,8 +37,9 @@ const Track = () => {
             artist: 'Юсуф',
             text: 'Знаешь ли ты, вдоль ночных дорог',
             listens: 5,
-            picture: 'http://localhost:5000/image/c5fc6350-3e5a-426d-bb7b-da8c997a511a.jpg',
+            picture: 'http://localhost:5000/image/3f152601-8f35-4621-b234-bbe0a52b8099.jpg',
             audio: 'http://localhost:5000/audio/d6a96d79-b7ad-4f11-b97c-d1bca1935d32.mp3',
+            comments: [],
         },
     ];
     return (
@@ -46,6 +53,7 @@ const Track = () => {
                         </Grid>
                     </Card>
                 </Box>
+                <TrackList tracks={tracks} />
             </Grid>
         </MainLayout>
     );
