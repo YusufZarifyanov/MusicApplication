@@ -1,7 +1,10 @@
 import { Button, Grid, TextField } from '@material-ui/core';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import FileUpload from '../../components/FileUpload';
 import StepWrapper from '../../components/StapWrapper';
+import { useInput } from '../../hooks/useInput';
 import MainLayout from '../../layouts/MainLayout';
 
 const Create = () => {
@@ -9,8 +12,23 @@ const Create = () => {
     const [picture, setPicture] = useState(null);
     const [audio, setAudio] = useState(null);
 
+    const name = useInput('');
+    const artist = useInput('');
+    const text = useInput('');
+
+    const router = useRouter();
+
     const next = () => {
         setActiveStep((prev) => prev + 1);
+        const formData = new FormData();
+        formData.append('name', name.value);
+        formData.append('text', text.value);
+        formData.append('artist', artist.value);
+        formData.append('picture', picture);
+        formData.append('audio', audio);
+        axios.post('http://localhost:5000/tracks', formData)
+        .then(res => router.push('/tracks'))
+        .catch(e => console.log(e))
     };
 
     const back = () => {
@@ -22,9 +40,9 @@ const Create = () => {
             <StepWrapper activeStep={activeStep}>
                 {activeStep === 0 && (
                     <Grid container direction={'column'} style={{ padding: 20 }}>
-                        <TextField label={'Название трека'} style={{ marginTop: 10 }} />
-                        <TextField label={'Имя исполнителя'} style={{ marginTop: 10 }} />
-                        <TextField label={'Слова к треку'} multiline rows={3} style={{ marginTop: 10 }} />
+                        <TextField label={'Название трека'} style={{ marginTop: 10 }} {...name} />
+                        <TextField label={'Имя исполнителя'} style={{ marginTop: 10 }} {...artist} />
+                        <TextField label={'Слова к треку'} multiline rows={3} style={{ marginTop: 10 }} {...text} />
                     </Grid>
                 )}
                 {activeStep === 1 && (
